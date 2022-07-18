@@ -3,14 +3,14 @@
 namespace Ptx\ClickhouseBuilder;
 
 use PHPUnit\Framework\TestCase;
-use Tinderbox\clickhouse\Client;
-use Tinderbox\clickhouse\Common\File;
-use Tinderbox\clickhouse\Common\FileFromString;
-use Tinderbox\clickhouse\Common\Format;
-use Tinderbox\clickhouse\Common\TempTable;
-use Tinderbox\clickhouse\Interfaces\FileInterface;
-use Tinderbox\clickhouse\Server;
-use Tinderbox\clickhouse\ServerProvider;
+use Tinderbox\Clickhouse\Client;
+use Tinderbox\Clickhouse\Common\File;
+use Tinderbox\Clickhouse\Common\FileFromString;
+use Tinderbox\Clickhouse\Common\Format;
+use Tinderbox\Clickhouse\Common\TempTable;
+use Tinderbox\Clickhouse\Interfaces\FileInterface;
+use Tinderbox\Clickhouse\Server;
+use Tinderbox\Clickhouse\ServerProvider;
 use Ptx\ClickhouseBuilder\Exceptions\BuilderException;
 use Ptx\ClickhouseBuilder\Query\Builder;
 use Ptx\ClickhouseBuilder\Query\Expression;

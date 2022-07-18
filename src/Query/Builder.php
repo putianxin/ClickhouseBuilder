@@ -2,16 +2,16 @@
 
 namespace Ptx\ClickhouseBuilder\Query;
 
-use Tinderbox\clickhouse\Client;
-use Tinderbox\clickhouse\Common\Format;
-use Tinderbox\clickhouse\Query;
+use Tinderbox\Clickhouse\Client;
+use Tinderbox\Clickhouse\Common\Format;
+use Tinderbox\Clickhouse\Query;
 
 class Builder extends BaseBuilder
 {
     /**
      * Client which is used to perform queries.
      *
-     * @var \Tinderbox\clickhouse\Client
+     * @var \Tinderbox\Clickhouse\Client
      */
     protected $client;
 
@@ -31,7 +31,7 @@ class Builder extends BaseBuilder
      *
      * @param array $settings
      *
-     * @return \Tinderbox\clickhouse\Query\Result|\Tinderbox\clickhouse\Query\Result[]
+     * @return \Tinderbox\Clickhouse\Query\Result|\Tinderbox\Clickhouse\Query\Result[]
      */
     public function get(array $settings = [])
     {
@@ -106,7 +106,7 @@ class Builder extends BaseBuilder
      * Insert in table data from files.
      *
      * @param array                                                 $columns
-     * @param string|\Tinderbox\clickhouse\Interfaces\FileInterface $file
+     * @param string|\Tinderbox\Clickhouse\Interfaces\FileInterface $file
      * @param string                                                $format
      * @param array                                                 $settings
      *

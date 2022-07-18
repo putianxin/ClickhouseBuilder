@@ -2,14 +2,14 @@
 
 namespace Ptx\ClickhouseBuilder\Integrations\Laravel;
 
-use Tinderbox\clickhouse\Client;
-use Tinderbox\clickhouse\Cluster;
-use Tinderbox\clickhouse\Common\ServerOptions;
-use Tinderbox\clickhouse\Interfaces\TransportInterface;
-use Tinderbox\clickhouse\Query;
-use Tinderbox\clickhouse\Server;
-use Tinderbox\clickhouse\ServerProvider;
-use Tinderbox\clickhouse\Transport\HttpTransport;
+use Tinderbox\Clickhouse\Client;
+use Tinderbox\Clickhouse\Cluster;
+use Tinderbox\Clickhouse\Common\ServerOptions;
+use Tinderbox\Clickhouse\Interfaces\TransportInterface;
+use Tinderbox\Clickhouse\Query;
+use Tinderbox\Clickhouse\Server;
+use Tinderbox\Clickhouse\ServerProvider;
+use Tinderbox\Clickhouse\Transport\HttpTransport;
 use Ptx\ClickhouseBuilder\Exceptions\BuilderException;
 use Ptx\ClickhouseBuilder\Exceptions\NotSupportedException;
 use Ptx\ClickhouseBuilder\Query\Enums\Format;
@@ -62,7 +62,7 @@ class Connection extends \Illuminate\Database\Connection
     /**
      * Last executed query statistic.
      *
-     * @var \Tinderbox\clickhouse\Query\QueryStatistic
+     * @var \Tinderbox\Clickhouse\Query\QueryStatistic
      */
     protected $lastQueryStatistic;
 
@@ -73,8 +73,8 @@ class Connection extends \Illuminate\Database\Connection
      *
      * @param array $config
      *
-     * @throws \Tinderbox\clickhouse\Exceptions\ClusterException
-     * @throws \Tinderbox\clickhouse\Exceptions\ServerProviderException
+     * @throws \Tinderbox\Clickhouse\Exceptions\ClusterException
+     * @throws \Tinderbox\Clickhouse\Exceptions\ServerProviderException
      */
     public function __construct(array $config)
     {
@@ -107,7 +107,7 @@ class Connection extends \Illuminate\Database\Connection
      *
      * @throws \Ptx\ClickhouseBuilder\Exceptions\BuilderException
      *
-     * @return array|\Tinderbox\clickhouse\Query\QueryStatistic
+     * @return array|\Tinderbox\Clickhouse\Query\QueryStatistic
      */
     public function getLastQueryStatistic()
     {
@@ -121,7 +121,7 @@ class Connection extends \Illuminate\Database\Connection
     /**
      * Sets last query statistic.
      *
-     * @param array|\Tinderbox\clickhouse\Query\QueryStatistic $queryStatistic
+     * @param array|\Tinderbox\Clickhouse\Query\QueryStatistic $queryStatistic
      */
     protected function setLastQueryStatistic($queryStatistic)
     {
@@ -146,7 +146,7 @@ class Connection extends \Illuminate\Database\Connection
      *
      * @param array $options
      *
-     * @return \Tinderbox\clickhouse\Interfaces\TransportInterface
+     * @return \Tinderbox\Clickhouse\Interfaces\TransportInterface
      */
     protected function createTransport(array $options): TransportInterface
     {
@@ -162,8 +162,8 @@ class Connection extends \Illuminate\Database\Connection
      *
      * @param array $config
      *
-     * @throws \Tinderbox\clickhouse\Exceptions\ClusterException
-     * @throws \Tinderbox\clickhouse\Exceptions\ServerProviderException
+     * @throws \Tinderbox\Clickhouse\Exceptions\ClusterException
+     * @throws \Tinderbox\Clickhouse\Exceptions\ServerProviderException
      *
      * @return ServerProvider
      */
@@ -352,7 +352,7 @@ class Connection extends \Illuminate\Database\Connection
         $statistic = [];
 
         foreach ($results as $i => $result) {
-            /* @var \Tinderbox\clickhouse\Query\Result $result */
+            /* @var \Tinderbox\Clickhouse\Query\Result $result */
             /* @var Query $query */
             $query = $result->getQuery();
 

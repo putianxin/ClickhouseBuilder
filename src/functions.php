@@ -81,15 +81,15 @@ if (!function_exists('into_memory_table')) {
         $file = $builder->getValues();
         $format = $builder->getFormat();
 
-        if (is_null($tableName) && $file instanceof \Tinderbox\clickhouse\Common\TempTable) {
+        if (is_null($tableName) && $file instanceof \Tinderbox\Clickhouse\Common\TempTable) {
             $tableName = $file->getName();
         }
 
-        if (is_null($structure) && $file instanceof \Tinderbox\clickhouse\Common\TempTable) {
+        if (is_null($structure) && $file instanceof \Tinderbox\Clickhouse\Common\TempTable) {
             $structure = $file->getStructure();
         }
 
-        if (is_null($format) && $file instanceof \Tinderbox\clickhouse\Common\TempTable) {
+        if (is_null($format) && $file instanceof \Tinderbox\Clickhouse\Common\TempTable) {
             $format = $file->getFormat();
         }
 
@@ -107,12 +107,12 @@ if (!function_exists('into_memory_table')) {
 }
 
 if (!function_exists('file_from')) {
-    function file_from($file): \Tinderbox\clickhouse\Interfaces\FileInterface
+    function file_from($file): \Tinderbox\Clickhouse\Interfaces\FileInterface
     {
         if (is_string($file) && is_file($file)) {
-            $file = new \Tinderbox\clickhouse\Common\File($file);
+            $file = new \Tinderbox\Clickhouse\Common\File($file);
         } elseif (is_scalar($file)) {
-            $file = new \Tinderbox\clickhouse\Common\FileFromString($file);
+            $file = new \Tinderbox\Clickhouse\Common\FileFromString($file);
         }
 
         return $file;
