@@ -17,10 +17,10 @@ composer require Ptx/clickhouse-builder
 For working query builder we must previously instantiate and pass in constructor `the-Ptx/clickhouse-php-client`.
 
 ```php
-$server = new Tinderbox\Clickhose\Server('127.0.0.1', '8123', 'default', 'user', 'pass');
-$serverProvider = (new Tinderbox\Clickhose\ServerProvider())->addServer($server);
+$server = new Tinderbox\clickhouse\Server('127.0.0.1', '8123', 'default', 'user', 'pass');
+$serverProvider = (new Tinderbox\clickhouse\ServerProvider())->addServer($server);
 
-$client = new Tinderbox\Clickhose\Client($serverProvider);
+$client = new Tinderbox\clickhouse\Client($serverProvider);
 $builder = new Builder($client);
 ```
 After that we can build and perform sql queries.

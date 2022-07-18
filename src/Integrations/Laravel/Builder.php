@@ -40,7 +40,7 @@ class Builder extends BaseBuilder
      *
      * @throws Tinderbox\Clickhouse\Exceptions\ClientException
      *
-     * @return \Tinderbox\Clickhose\Query\Result|\Tinderbox\Clickhose\Query\Result[]
+     * @return \Tinderbox\clickhouse\Query\Result|\Tinderbox\clickhouse\Query\Result[]
      */
     public function get()
     {
@@ -67,7 +67,7 @@ class Builder extends BaseBuilder
      * Performs compiled sql for count rows only. May be used for pagination
      * Works only without async queries.
      *
-     * @throws \Tinderbox\Clickhose\Exceptions\ClientException
+     * @throws \Tinderbox\clickhouse\Exceptions\ClientException
      *
      * @return int|mixed
      */
@@ -117,9 +117,9 @@ class Builder extends BaseBuilder
     /**
      * Perform query and get first row.
      *
-     * @throws \Tinderbox\Clickhose\Exceptions\ClientException
+     * @throws \Tinderbox\clickhouse\Exceptions\ClientException
      *
-     * @return mixed|null|\Tinderbox\Clickhose\Query\Result
+     * @return mixed|null|\Tinderbox\clickhouse\Query\Result
      */
     public function first()
     {
@@ -157,7 +157,7 @@ class Builder extends BaseBuilder
      * Insert in table data from files.
      *
      * @param array                                                 $columns
-     * @param string|\Tinderbox\Clickhose\Interfaces\FileInterface $file
+     * @param string|\Tinderbox\clickhouse\Interfaces\FileInterface $file
      * @param string                                                $format
      *
      * @return bool
@@ -222,7 +222,7 @@ class Builder extends BaseBuilder
      * @param int $page
      * @param int $perPage
      *
-     * @throws \Tinderbox\Clickhose\Exceptions\ClientException
+     * @throws \Tinderbox\clickhouse\Exceptions\ClientException
      *
      * @return LengthAwarePaginator
      */

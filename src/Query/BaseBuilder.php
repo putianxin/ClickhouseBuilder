@@ -3,10 +3,10 @@
 namespace Ptx\ClickhouseBuilder\Query;
 
 use Closure;
-use Tinderbox\Clickhose\Common\File;
-use Tinderbox\Clickhose\Common\FileFromString;
-use Tinderbox\Clickhose\Common\TempTable;
-use Tinderbox\Clickhose\Interfaces\FileInterface;
+use Tinderbox\clickhouse\Common\File;
+use Tinderbox\clickhouse\Common\FileFromString;
+use Tinderbox\clickhouse\Common\TempTable;
+use Tinderbox\clickhouse\Interfaces\FileInterface;
 use Ptx\ClickhouseBuilder\Query\Enums\Format;
 use Ptx\ClickhouseBuilder\Query\Enums\JoinStrict;
 use Ptx\ClickhouseBuilder\Query\Enums\JoinType;

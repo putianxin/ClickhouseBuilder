@@ -5,7 +5,7 @@ namespace Ptx\ClickhouseBuilder;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
-use Tinderbox\Clickhose\Client;
+use Tinderbox\clickhouse\Client;
 use Ptx\ClickhouseBuilder\Exceptions\GrammarException;
 use Ptx\ClickhouseBuilder\Query\Builder;
 use Ptx\ClickhouseBuilder\Query\Column;
