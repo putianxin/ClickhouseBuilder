@@ -1,8 +1,8 @@
 <?php
 
-namespace Tinderbox\ClickhouseBuilder\Query;
+namespace Ptx\ClickhouseBuilder\Query;
 
-use Tinderbox\ClickhouseBuilder\Query\Enums\JoinType;
+use Ptx\ClickhouseBuilder\Query\Enums\JoinType;
 
 class ArrayJoinClause
 {

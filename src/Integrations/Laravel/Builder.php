@@ -1,15 +1,15 @@
 <?php
 
-namespace Tinderbox\ClickhouseBuilder\Integrations\Laravel;
+namespace Ptx\ClickhouseBuilder\Integrations\Laravel;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Traits\Macroable;
 use Tinderbox\Clickhouse\Common\Format;
 use Tinderbox\Clickhouse\Query;
 use Tinderbox\Clickhouse\Query\QueryStatistic;
-use Tinderbox\ClickhouseBuilder\Query\BaseBuilder;
-use Tinderbox\ClickhouseBuilder\Query\Expression;
-use Tinderbox\ClickhouseBuilder\Query\Grammar;
+use Ptx\ClickhouseBuilder\Query\BaseBuilder;
+use Ptx\ClickhouseBuilder\Query\Expression;
+use Ptx\ClickhouseBuilder\Query\Grammar;
 
 class Builder extends BaseBuilder
 {
@@ -20,14 +20,14 @@ class Builder extends BaseBuilder
     /**
      * Connection which is used to perform queries.
      *
-     * @var \Tinderbox\ClickhouseBuilder\Integrations\Laravel\Connection
+     * @var \Ptx\ClickhouseBuilder\Integrations\Laravel\Connection
      */
     protected $connection;
 
     /**
      * Builder constructor.
      *
-     * @param \Tinderbox\ClickhouseBuilder\Integrations\Laravel\Connection $connection
+     * @param \Ptx\ClickhouseBuilder\Integrations\Laravel\Connection $connection
      */
     public function __construct(Connection $connection)
     {
@@ -38,9 +38,9 @@ class Builder extends BaseBuilder
     /**
      * Perform compiled from builder sql query and getting result.
      *
-     * @throws \Tinderbox\Clickhouse\Exceptions\ClientException
+     * @throws Tinderbox\Clickhouse\Exceptions\ClientException
      *
-     * @return \Tinderbox\Clickhouse\Query\Result|\Tinderbox\Clickhouse\Query\Result[]
+     * @return \Tinderbox\Clickhose\Query\Result|\Tinderbox\Clickhose\Query\Result[]
      */
     public function get()
     {
@@ -67,7 +67,7 @@ class Builder extends BaseBuilder
      * Performs compiled sql for count rows only. May be used for pagination
      * Works only without async queries.
      *
-     * @throws \Tinderbox\Clickhouse\Exceptions\ClientException
+     * @throws \Tinderbox\Clickhose\Exceptions\ClientException
      *
      * @return int|mixed
      */
@@ -84,11 +84,42 @@ class Builder extends BaseBuilder
     }
 
     /**
+     * @param $column
+     * @return int
+     * 2022-07-18 add
+     */
+    public function sum($column)
+    {
+        $builder = $this->getSumQuery($column);
+        $result = $builder->get();
+
+        return $result[0]['sum'] ?? 0;
+    }
+
+    /**
+     * @param $value
+     * @param $callback
+     * @param null $default
+     * @return $this|Builder
+     * 2022-07-18 add
+     */
+    public function when($value, $callback, $default = null)
+    {
+        if ($value) {
+            return $callback($this, $value) ?: $this;
+        } elseif ($default) {
+            return $default($this, $value) ?: $this;
+        }
+
+        return $this;
+    }
+
+    /**
      * Perform query and get first row.
      *
-     * @throws \Tinderbox\Clickhouse\Exceptions\ClientException
+     * @throws \Tinderbox\Clickhose\Exceptions\ClientException
      *
-     * @return mixed|null|\Tinderbox\Clickhouse\Query\Result
+     * @return mixed|null|\Tinderbox\Clickhose\Query\Result
      */
     public function first()
     {
@@ -126,7 +157,7 @@ class Builder extends BaseBuilder
      * Insert in table data from files.
      *
      * @param array                                                 $columns
-     * @param string|\Tinderbox\Clickhouse\Interfaces\FileInterface $file
+     * @param string|\Tinderbox\Clickhose\Interfaces\FileInterface $file
      * @param string                                                $format
      *
      * @return bool
@@ -146,7 +177,7 @@ class Builder extends BaseBuilder
      * @param array $values
      * @param bool  $skipSort
      *
-     * @throws \Tinderbox\ClickhouseBuilder\Exceptions\GrammarException
+     * @throws \Ptx\ClickhouseBuilder\Exceptions\GrammarException
      *
      * @return bool
      */
@@ -176,7 +207,7 @@ class Builder extends BaseBuilder
     /**
      * Performs ALTER TABLE `table` DELETE query.
      *
-     * @throws \Tinderbox\ClickhouseBuilder\Exceptions\GrammarException
+     * @throws \Ptx\ClickhouseBuilder\Exceptions\GrammarException
      *
      * @return int
      */
@@ -191,7 +222,7 @@ class Builder extends BaseBuilder
      * @param int $page
      * @param int $perPage
      *
-     * @throws \Tinderbox\Clickhouse\Exceptions\ClientException
+     * @throws \Tinderbox\Clickhose\Exceptions\ClientException
      *
      * @return LengthAwarePaginator
      */
@@ -215,7 +246,7 @@ class Builder extends BaseBuilder
     /**
      * Get last query statistics from the connection.
      *
-     * @throws \Tinderbox\ClickhouseBuilder\Exceptions\BuilderException
+     * @throws \Ptx\ClickhouseBuilder\Exceptions\BuilderException
      *
      * @return QueryStatistic
      */

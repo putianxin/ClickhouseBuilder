@@ -1,14 +1,14 @@
 <?php
 
-namespace Tinderbox\ClickhouseBuilder;
+namespace Ptx\ClickhouseBuilder;
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
-use Tinderbox\Clickhouse\Client;
-use Tinderbox\ClickhouseBuilder\Query\Builder;
-use Tinderbox\ClickhouseBuilder\Query\Expression;
-use Tinderbox\ClickhouseBuilder\Query\From;
+use Tinderbox\Clickhose\Client;
+use Ptx\ClickhouseBuilder\Query\Builder;
+use Ptx\ClickhouseBuilder\Query\Expression;
+use Ptx\ClickhouseBuilder\Query\From;
 
 class FromTest extends TestCase
 {

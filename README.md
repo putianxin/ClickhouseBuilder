@@ -1,5 +1,5 @@
 # Clickhouse Query Builder
-[![Build Status](https://travis-ci.org/the-tinderbox/ClickhouseBuilder.svg?branch=master)](https://travis-ci.org/the-tinderbox/ClickhouseBuilder) [![Coverage Status](https://coveralls.io/repos/github/the-tinderbox/ClickhouseBuilder/badge.svg?branch=master)](https://coveralls.io/github/the-tinderbox/ClickhouseBuilder?branch=master)
+[![Build Status](https://travis-ci.org/the-Ptx/ClickhouseBuilder.svg?branch=master)](https://travis-ci.org/the-Ptx/ClickhouseBuilder) [![Coverage Status](https://coveralls.io/repos/github/the-Ptx/ClickhouseBuilder/badge.svg?branch=master)](https://coveralls.io/github/the-Ptx/ClickhouseBuilder?branch=master)
 
 # Requirements
 
@@ -10,17 +10,17 @@
 Via composer
 
 ```bash
-composer require the-tinderbox/clickhouse-builder
+composer require the-Ptx/clickhouse-builder
 ```
 
 # Usage
-For working query builder we must previously instantiate and pass in constructor `the-tinderbox/clickhouse-php-client`.
+For working query builder we must previously instantiate and pass in constructor `the-Ptx/clickhouse-php-client`.
 
 ```php
-$server = new Tinderbox\Clickhouse\Server('127.0.0.1', '8123', 'default', 'user', 'pass');
-$serverProvider = (new Tinderbox\Clickhouse\ServerProvider())->addServer($server);
+$server = new Tinderbox\Clickhose\Server('127.0.0.1', '8123', 'default', 'user', 'pass');
+$serverProvider = (new Tinderbox\Clickhose\ServerProvider())->addServer($server);
 
-$client = new Tinderbox\Clickhouse\Client($serverProvider);
+$client = new Tinderbox\Clickhose\Client($serverProvider);
 $builder = new Builder($client);
 ```
 After that we can build and perform sql queries.
@@ -198,7 +198,7 @@ SELECT * FROM `test` LEFT ARRAY JOIN `someArr`
 There are some cases when you need to filter f.e. users by their ids, but amount of ids is huge. You can
 store users ids in local file, upload it to server and use it as temporary table.
 
-Read more about local files [here](https://github.com/the-tinderbox/ClickhouseClient) in section `Using local files`.
+Read more about local files [here](https://github.com/the-Ptx/ClickhouseClient) in section `Using local files`.
 
 #### Select
 
@@ -470,7 +470,7 @@ In `config/app.php` add:
 ```php
     'providers' => [
         ...
-        \Tinderbox\ClickhouseBuilder\Integrations\Laravel\ClickhouseServiceProvider::class,
+        \Ptx\ClickhouseBuilder\Integrations\Laravel\ClickhouseServiceProvider::class,
         ...
     ]
 ```
@@ -480,7 +480,7 @@ In `config/app.php` add:
 In `bootstrap/app.php` add:
 
 ```php
-$app->register(\Tinderbox\ClickhouseBuilder\Integrations\Laravel\ClickhouseServiceProvider::class);
+$app->register(\Ptx\ClickhouseBuilder\Integrations\Laravel\ClickhouseServiceProvider::class);
 ```
 
 Connection configures via `config/database.php`.

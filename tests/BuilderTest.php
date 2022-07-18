@@ -1,24 +1,24 @@
 <?php
 
-namespace Tinderbox\ClickhouseBuilder;
+namespace Ptx\ClickhouseBuilder;
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
-use Tinderbox\Clickhouse\Client;
-use Tinderbox\Clickhouse\Common\File;
-use Tinderbox\Clickhouse\Common\FileFromString;
-use Tinderbox\Clickhouse\Common\Format;
-use Tinderbox\Clickhouse\Common\TempTable;
-use Tinderbox\Clickhouse\Query;
-use Tinderbox\Clickhouse\Server;
-use Tinderbox\Clickhouse\ServerProvider;
-use Tinderbox\ClickhouseBuilder\Query\Builder;
-use Tinderbox\ClickhouseBuilder\Query\Column;
-use Tinderbox\ClickhouseBuilder\Query\Enums\Operator;
-use Tinderbox\ClickhouseBuilder\Query\From;
-use Tinderbox\ClickhouseBuilder\Query\JoinClause;
-use Tinderbox\ClickhouseBuilder\Query\TwoElementsLogicExpression;
+use Tinderbox\Clickhose\Client;
+use Tinderbox\Clickhose\Common\File;
+use Tinderbox\Clickhose\Common\FileFromString;
+use Tinderbox\Clickhose\Common\Format;
+use Tinderbox\Clickhose\Common\TempTable;
+use Tinderbox\Clickhose\Query;
+use Tinderbox\Clickhose\Server;
+use Tinderbox\Clickhose\ServerProvider;
+use Ptx\ClickhouseBuilder\Query\Builder;
+use Ptx\ClickhouseBuilder\Query\Column;
+use Ptx\ClickhouseBuilder\Query\Enums\Operator;
+use Ptx\ClickhouseBuilder\Query\From;
+use Ptx\ClickhouseBuilder\Query\JoinClause;
+use Ptx\ClickhouseBuilder\Query\TwoElementsLogicExpression;
 
 class BuilderTest extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tinderbox\ClickhouseBuilder\Query;
+namespace Ptx\ClickhouseBuilder\Query;
 
 class Limit
 {

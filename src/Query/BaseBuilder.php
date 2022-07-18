@@ -1,17 +1,17 @@
 <?php
 
-namespace Tinderbox\ClickhouseBuilder\Query;
+namespace Ptx\ClickhouseBuilder\Query;
 
 use Closure;
-use Tinderbox\Clickhouse\Common\File;
-use Tinderbox\Clickhouse\Common\FileFromString;
-use Tinderbox\Clickhouse\Common\TempTable;
-use Tinderbox\Clickhouse\Interfaces\FileInterface;
-use Tinderbox\ClickhouseBuilder\Query\Enums\Format;
-use Tinderbox\ClickhouseBuilder\Query\Enums\JoinStrict;
-use Tinderbox\ClickhouseBuilder\Query\Enums\JoinType;
-use Tinderbox\ClickhouseBuilder\Query\Enums\Operator;
-use Tinderbox\ClickhouseBuilder\Query\Enums\OrderDirection;
+use Tinderbox\Clickhose\Common\File;
+use Tinderbox\Clickhose\Common\FileFromString;
+use Tinderbox\Clickhose\Common\TempTable;
+use Tinderbox\Clickhose\Interfaces\FileInterface;
+use Ptx\ClickhouseBuilder\Query\Enums\Format;
+use Ptx\ClickhouseBuilder\Query\Enums\JoinStrict;
+use Ptx\ClickhouseBuilder\Query\Enums\JoinType;
+use Ptx\ClickhouseBuilder\Query\Enums\Operator;
+use Ptx\ClickhouseBuilder\Query\Enums\OrderDirection;
 
 abstract class BaseBuilder
 {
@@ -187,6 +187,18 @@ abstract class BaseBuilder
 
         return $this->cloneWithout($without)->select(raw('count() as `count`'));
     }
+
+    public function getSumQuery($column)
+    {
+        $without = ['columns' => [], 'limit' => null];
+
+        if (empty($this->groups)) {
+            $without['orders'] = [];
+        }
+
+        return $this->cloneWithout($without)->select(raw("sum({$column}) as `sum`"));
+    }
+
 
     /**
      * Clone the query without the given properties.

@@ -1,27 +1,27 @@
 <?php
 
-namespace Tinderbox\ClickhouseBuilder;
+namespace Ptx\ClickhouseBuilder;
 
 use Illuminate\Config\Repository;
 use Illuminate\Container\Container;
 use Illuminate\Database\DatabaseServiceProvider;
 use Illuminate\Events\EventServiceProvider;
 use PHPUnit\Framework\TestCase;
-use Tinderbox\Clickhouse\Client;
-use Tinderbox\Clickhouse\Common\FileFromString;
-use Tinderbox\Clickhouse\Interfaces\TransportInterface;
-use Tinderbox\Clickhouse\Query;
-use Tinderbox\Clickhouse\Query\QueryStatistic;
-use Tinderbox\Clickhouse\Query\Result;
-use Tinderbox\Clickhouse\Server;
-use Tinderbox\Clickhouse\ServerProvider;
-use Tinderbox\Clickhouse\Transport\HttpTransport;
-use Tinderbox\ClickhouseBuilder\Exceptions\BuilderException;
-use Tinderbox\ClickhouseBuilder\Exceptions\NotSupportedException;
-use Tinderbox\ClickhouseBuilder\Integrations\Laravel\Builder;
-use Tinderbox\ClickhouseBuilder\Integrations\Laravel\ClickhouseServiceProvider;
-use Tinderbox\ClickhouseBuilder\Integrations\Laravel\Connection;
-use Tinderbox\ClickhouseBuilder\Query\Expression;
+use Tinderbox\Clickhose\Client;
+use Tinderbox\Clickhose\Common\FileFromString;
+use Tinderbox\Clickhose\Interfaces\TransportInterface;
+use Tinderbox\Clickhose\Query;
+use Tinderbox\Clickhose\Query\QueryStatistic;
+use Tinderbox\Clickhose\Query\Result;
+use Tinderbox\Clickhose\Server;
+use Tinderbox\Clickhose\ServerProvider;
+use Tinderbox\Clickhose\Transport\HttpTransport;
+use Ptx\ClickhouseBuilder\Exceptions\BuilderException;
+use Ptx\ClickhouseBuilder\Exceptions\NotSupportedException;
+use Ptx\ClickhouseBuilder\Integrations\Laravel\Builder;
+use Ptx\ClickhouseBuilder\Integrations\Laravel\ClickhouseServiceProvider;
+use Ptx\ClickhouseBuilder\Integrations\Laravel\Connection;
+use Ptx\ClickhouseBuilder\Query\Expression;
 
 class LaravelIntegrationTest extends TestCase
 {

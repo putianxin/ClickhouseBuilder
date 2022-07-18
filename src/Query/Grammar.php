@@ -1,25 +1,25 @@
 <?php
 
-namespace Tinderbox\ClickhouseBuilder\Query;
+namespace Ptx\ClickhouseBuilder\Query;
 
-use Tinderbox\ClickhouseBuilder\Exceptions\GrammarException;
-use Tinderbox\ClickhouseBuilder\Query\Enums\Format;
-use Tinderbox\ClickhouseBuilder\Query\Traits\ArrayJoinComponentCompiler;
-use Tinderbox\ClickhouseBuilder\Query\Traits\ColumnsComponentCompiler;
-use Tinderbox\ClickhouseBuilder\Query\Traits\FormatComponentCompiler;
-use Tinderbox\ClickhouseBuilder\Query\Traits\FromComponentCompiler;
-use Tinderbox\ClickhouseBuilder\Query\Traits\GroupsComponentCompiler;
-use Tinderbox\ClickhouseBuilder\Query\Traits\HavingsComponentCompiler;
-use Tinderbox\ClickhouseBuilder\Query\Traits\JoinComponentCompiler;
-use Tinderbox\ClickhouseBuilder\Query\Traits\LimitByComponentCompiler;
-use Tinderbox\ClickhouseBuilder\Query\Traits\LimitComponentCompiler;
-use Tinderbox\ClickhouseBuilder\Query\Traits\OrdersComponentCompiler;
-use Tinderbox\ClickhouseBuilder\Query\Traits\PreWheresComponentCompiler;
-use Tinderbox\ClickhouseBuilder\Query\Traits\SampleComponentCompiler;
-use Tinderbox\ClickhouseBuilder\Query\Traits\TupleCompiler;
-use Tinderbox\ClickhouseBuilder\Query\Traits\TwoElementsLogicExpressionsCompiler;
-use Tinderbox\ClickhouseBuilder\Query\Traits\UnionsComponentCompiler;
-use Tinderbox\ClickhouseBuilder\Query\Traits\WheresComponentCompiler;
+use Ptx\ClickhouseBuilder\Exceptions\GrammarException;
+use Ptx\ClickhouseBuilder\Query\Enums\Format;
+use Ptx\ClickhouseBuilder\Query\Traits\ArrayJoinComponentCompiler;
+use Ptx\ClickhouseBuilder\Query\Traits\ColumnsComponentCompiler;
+use Ptx\ClickhouseBuilder\Query\Traits\FormatComponentCompiler;
+use Ptx\ClickhouseBuilder\Query\Traits\FromComponentCompiler;
+use Ptx\ClickhouseBuilder\Query\Traits\GroupsComponentCompiler;
+use Ptx\ClickhouseBuilder\Query\Traits\HavingsComponentCompiler;
+use Ptx\ClickhouseBuilder\Query\Traits\JoinComponentCompiler;
+use Ptx\ClickhouseBuilder\Query\Traits\LimitByComponentCompiler;
+use Ptx\ClickhouseBuilder\Query\Traits\LimitComponentCompiler;
+use Ptx\ClickhouseBuilder\Query\Traits\OrdersComponentCompiler;
+use Ptx\ClickhouseBuilder\Query\Traits\PreWheresComponentCompiler;
+use Ptx\ClickhouseBuilder\Query\Traits\SampleComponentCompiler;
+use Ptx\ClickhouseBuilder\Query\Traits\TupleCompiler;
+use Ptx\ClickhouseBuilder\Query\Traits\TwoElementsLogicExpressionsCompiler;
+use Ptx\ClickhouseBuilder\Query\Traits\UnionsComponentCompiler;
+use Ptx\ClickhouseBuilder\Query\Traits\WheresComponentCompiler;
 
 class Grammar
 {

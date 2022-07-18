@@ -1,8 +1,8 @@
 <?php
 
-namespace Tinderbox\ClickhouseBuilder\Exceptions;
+namespace Ptx\ClickhouseBuilder\Exceptions;
 
-use Tinderbox\ClickhouseBuilder\Query\JoinClause;
+use Ptx\ClickhouseBuilder\Query\JoinClause;
 
 class GrammarException extends Exception
 {

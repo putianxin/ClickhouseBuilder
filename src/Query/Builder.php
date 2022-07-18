@@ -1,17 +1,17 @@
 <?php
 
-namespace Tinderbox\ClickhouseBuilder\Query;
+namespace Ptx\ClickhouseBuilder\Query;
 
-use Tinderbox\Clickhouse\Client;
-use Tinderbox\Clickhouse\Common\Format;
-use Tinderbox\Clickhouse\Query;
+use Tinderbox\Clickhose\Client;
+use Tinderbox\Clickhose\Common\Format;
+use Tinderbox\Clickhose\Query;
 
 class Builder extends BaseBuilder
 {
     /**
      * Client which is used to perform queries.
      *
-     * @var \Tinderbox\Clickhouse\Client
+     * @var \Tinderbox\Clickhose\Client
      */
     protected $client;
 
@@ -31,7 +31,7 @@ class Builder extends BaseBuilder
      *
      * @param array $settings
      *
-     * @return \Tinderbox\Clickhouse\Query\Result|\Tinderbox\Clickhouse\Query\Result[]
+     * @return \Tinderbox\Clickhose\Query\Result|\Tinderbox\Clickhose\Query\Result[]
      */
     public function get(array $settings = [])
     {
@@ -106,7 +106,7 @@ class Builder extends BaseBuilder
      * Insert in table data from files.
      *
      * @param array                                                 $columns
-     * @param string|\Tinderbox\Clickhouse\Interfaces\FileInterface $file
+     * @param string|\Tinderbox\Clickhose\Interfaces\FileInterface $file
      * @param string                                                $format
      * @param array                                                 $settings
      *
@@ -126,7 +126,7 @@ class Builder extends BaseBuilder
      *
      * @param array $values
      *
-     * @throws \Tinderbox\ClickhouseBuilder\Exceptions\GrammarException
+     * @throws \Ptx\ClickhouseBuilder\Exceptions\GrammarException
      *
      * @return bool
      */
@@ -156,7 +156,7 @@ class Builder extends BaseBuilder
     /**
      * Performs ALTER TABLE `table` DELETE query.
      *
-     * @throws \Tinderbox\ClickhouseBuilder\Exceptions\GrammarException
+     * @throws \Ptx\ClickhouseBuilder\Exceptions\GrammarException
      *
      * @return bool
      */
