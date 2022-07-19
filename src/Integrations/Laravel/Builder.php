@@ -38,17 +38,22 @@ class Builder extends BaseBuilder
     /**
      * Perform compiled from builder sql query and getting result.
      *
+     * @return \Tinderbox\Clickhouse\Query\Result|\Tinderbox\Clickhouse\Query\Result[]
      * @throws Tinderbox\Clickhouse\Exceptions\ClientException
      *
-     * @return \Tinderbox\Clickhouse\Query\Result|\Tinderbox\Clickhouse\Query\Result[]
      */
-    public function get()
+    public function get($columns = null)
     {
-        if (!empty($this->async)) {
-            return $this->connection->selectAsync($this->toAsyncQueries());
-        } else {
-            return $this->connection->select($this->toSql(), [], $this->getFiles());
+        if ($columns) {
+            $this->select($columns);
         }
+
+        if (!empty($this->async)) {
+            $return = $this->connection->selectAsync($this->toAsyncQueries());
+        } else {
+            $return = $this->connection->select($this->toSql(), [], $this->getFiles());
+        }
+        return collect($return);
     }
 
     /**
@@ -67,9 +72,9 @@ class Builder extends BaseBuilder
      * Performs compiled sql for count rows only. May be used for pagination
      * Works only without async queries.
      *
+     * @return int|mixed
      * @throws \Tinderbox\Clickhouse\Exceptions\ClientException
      *
-     * @return int|mixed
      */
     public function count()
     {
@@ -77,9 +82,9 @@ class Builder extends BaseBuilder
         $result = $builder->get();
 
         if (!empty($this->groups)) {
-            return count($result);
+            return $result->count();
         } else {
-            return $result[0]['count'] ?? 0;
+            return $result->first()['count'] ?? 0;
         }
     }
 
@@ -93,7 +98,13 @@ class Builder extends BaseBuilder
         $builder = $this->getSumQuery($column);
         $result = $builder->get();
 
-        return $result[0]['sum'] ?? 0;
+        return $result->first()['sum'] ?? 0;
+    }
+
+    public function value($column)
+    {
+        $result = $this->limit(1)->get($column);
+        return $result->first()[$column];
     }
 
     /**
@@ -117,15 +128,21 @@ class Builder extends BaseBuilder
     /**
      * Perform query and get first row.
      *
+     * @return mixed|null|\Tinderbox\Clickhouse\Query\Result
      * @throws \Tinderbox\Clickhouse\Exceptions\ClientException
      *
-     * @return mixed|null|\Tinderbox\Clickhouse\Query\Result
      */
-    public function first()
+    public function first($column = null)
     {
-        $result = $this->limit(1)->get();
+        $result = $this->limit(1)->get($column);
 
-        return $result[0] ?? null;
+        return (object)$result->first();
+    }
+
+    public function distinct($column = '')
+    {
+        $this->distinct = $column;
+        return $this;
     }
 
     /**
@@ -141,24 +158,24 @@ class Builder extends BaseBuilder
     /**
      * Insert in table data from files.
      *
-     * @param array  $columns
-     * @param array  $files
+     * @param array $columns
+     * @param array $files
      * @param string $format
-     * @param int    $concurrency
+     * @param int $concurrency
      *
      * @return array
      */
     public function insertFiles(array $columns, array $files, string $format = Format::CSV, int $concurrency = 5): array
     {
-        return $this->connection->insertFiles((string) $this->getFrom()->getTable(), $columns, $files, $format, $concurrency);
+        return $this->connection->insertFiles((string)$this->getFrom()->getTable(), $columns, $files, $format, $concurrency);
     }
 
     /**
      * Insert in table data from files.
      *
-     * @param array                                                 $columns
+     * @param array $columns
      * @param string|\Tinderbox\Clickhouse\Interfaces\FileInterface $file
-     * @param string                                                $format
+     * @param string $format
      *
      * @return bool
      */
@@ -175,11 +192,11 @@ class Builder extends BaseBuilder
      * Performs insert query.
      *
      * @param array $values
-     * @param bool  $skipSort
-     *
-     * @throws \Ptx\ClickhouseBuilder\Exceptions\GrammarException
+     * @param bool $skipSort
      *
      * @return bool
+     * @throws \Ptx\ClickhouseBuilder\Exceptions\GrammarException
+     *
      */
     public function insert(array $values, bool $skipSort = false)
     {
@@ -207,9 +224,9 @@ class Builder extends BaseBuilder
     /**
      * Performs ALTER TABLE `table` DELETE query.
      *
+     * @return int
      * @throws \Ptx\ClickhouseBuilder\Exceptions\GrammarException
      *
-     * @return int
      */
     public function delete()
     {
@@ -222,15 +239,15 @@ class Builder extends BaseBuilder
      * @param int $page
      * @param int $perPage
      *
+     * @return LengthAwarePaginator
      * @throws \Tinderbox\Clickhouse\Exceptions\ClientException
      *
-     * @return LengthAwarePaginator
      */
     public function paginate(int $page = 1, int $perPage = 15): LengthAwarePaginator
     {
-        $count = (int) $this->getConnection()
+        $count = (int)$this->getConnection()
             ->table($this->cloneWithout(['columns' => [], 'orders' => [], 'limit' => null])
-            ->select(new Expression('1')))
+                ->select(new Expression('1')))
             ->count();
 
         $results = $this->limit($perPage, $perPage * ($page - 1))->get();
@@ -246,9 +263,9 @@ class Builder extends BaseBuilder
     /**
      * Get last query statistics from the connection.
      *
+     * @return QueryStatistic
      * @throws \Ptx\ClickhouseBuilder\Exceptions\BuilderException
      *
-     * @return QueryStatistic
      */
     public function getLastQueryStatistics(): QueryStatistic
     {

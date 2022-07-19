@@ -3,6 +3,7 @@
 namespace Ptx\ClickhouseBuilder\Query;
 
 use Closure;
+use Illuminate\Database\Query\Builder;
 use Tinderbox\Clickhouse\Common\File;
 use Tinderbox\Clickhouse\Common\FileFromString;
 use Tinderbox\Clickhouse\Common\TempTable;
@@ -152,6 +153,8 @@ abstract class BaseBuilder
 
     protected $serverHostname;
 
+    protected $distinct;
+
     /**
      * Set columns for select statement.
      *
@@ -184,8 +187,12 @@ abstract class BaseBuilder
         if (empty($this->groups)) {
             $without['orders'] = [];
         }
+        $raw = raw('count() as `count`');
+        if($this->distinct) {
+            $raw = raw("count(distinct({$this->distinct})) as count");
+        }
 
-        return $this->cloneWithout($without)->select(raw('count() as `count`'));
+        return $this->cloneWithout($without)->select($raw);
     }
 
     public function getSumQuery($column)
@@ -498,30 +505,19 @@ abstract class BaseBuilder
     }
 
     /**
-     * Add join to query.
+     * Add a join clause to the query.
      *
-     * @param string|self|Closure $table  Table to select from, also may be a sub-query
-     * @param string|null         $strict All or any
-     * @param string|null         $type   Left or inner
-     * @param array|null          $using  Columns to use for join
-     * @param bool                $global Global distribution for right table
-     * @param string|null         $alias  Alias of joined table or sub-query
-     *
-     * @return static
+     * @param  string  $table
+     * @param  \Closure|string  $first
+     * @param  string|null  $operator
+     * @param  string|null  $second
+     * @param  string  $type
+     * @param  bool  $where
+     * @return $this
      */
-    public function join(
-        $table,
-        string $strict = null,
-        string $type = null,
-        array $using = null,
-        bool $global = false,
-        ?string $alias = null
-    ) {
+    public function join($table, $first, $operator = null, $second = null, $type = 'inner', $where = false)
+    {
         $join = new JoinClause($this);
-
-        /*
-         * If builder instance given, then we assume that sub-query should be used as table in join
-         */
         if ($table instanceof BaseBuilder) {
             $join->query($table);
 
@@ -535,40 +531,15 @@ abstract class BaseBuilder
         if ($table instanceof Closure) {
             $table($join);
         }
-
-        /*
-         * If given anything that is not builder instance or callback. For example, string,
-         * then we assume that table name was given.
-         */
         if (!$table instanceof Closure && !$table instanceof BaseBuilder) {
             $join->table($table);
         }
-
-        /*
-         * If using was given, then merge it with using given before, in closure
-         */
-        if (!is_null($using)) {
-            $join->addUsing($using);
-        }
-
-        if (!is_null($strict) && is_null($join->getStrict())) {
-            $join->strict($strict);
-        }
-
         if (!is_null($type) && is_null($join->getType())) {
             $join->type($type);
         }
-
-        if (!is_null($alias) && is_null($join->getAlias())) {
-            $join->as($alias);
+        if($first) {
+            $join->on($first, $operator, $second);
         }
-
-        $join->distributed($global);
-
-        if (!is_null($join->getSubQuery())) {
-            $join->query($join->getSubQuery());
-        }
-
         $this->joins[] = $join;
 
         return $this;
@@ -587,9 +558,14 @@ abstract class BaseBuilder
      *
      * @return static
      */
-    public function leftJoin($table, string $strict = null, array $using = null, bool $global = false, ?string $alias = null)
+    public function leftJoin($table, $first, $operator = null, $second = null)
     {
-        return $this->join($table, $strict ?? JoinStrict::ALL, JoinType::LEFT, $using, $global, $alias);
+        return $this->join($table, $first, $operator, $second, 'left');
+    }
+
+    public function rightJoin($table, $first, $operator = null, $second = null)
+    {
+        return $this->join($table, $first, $operator, $second, 'right');
     }
 
     /**
@@ -756,9 +732,9 @@ abstract class BaseBuilder
 
         if (is_null($expression->getSecondElement()) && !is_null($value)) {
             if (is_array($value) && count($value) === 2 && Operator::isValid($operator) && in_array(
-                $operator,
-                [Operator::BETWEEN, Operator::NOT_BETWEEN]
-            )
+                    $operator,
+                    [Operator::BETWEEN, Operator::NOT_BETWEEN]
+                )
             ) {
                 $value = (new TwoElementsLogicExpression($this))
                     ->firstElement($value[0])
@@ -768,9 +744,9 @@ abstract class BaseBuilder
             }
 
             if (is_array($value) && Operator::isValid($operator) && in_array(
-                $operator,
-                [Operator::IN, Operator::NOT_IN]
-            )
+                    $operator,
+                    [Operator::IN, Operator::NOT_IN]
+                )
             ) {
                 $value = new Tuple($value);
             }
@@ -1073,15 +1049,20 @@ abstract class BaseBuilder
      */
     public function where($column, $operator = null, $value = null, string $concatOperator = Operator:: AND)
     {
-        list($value, $operator) = $this->prepareValueAndOperator($value, $operator, func_num_args() == 2);
-
-        $this->wheres[] = $this->assembleTwoElementsLogicExpression(
-            $column,
-            $operator,
-            $value,
-            $concatOperator,
-            'wheres'
-        );
+        if(is_array($column)){
+            foreach($column as $key => $val){
+                $this->where[] = $this->assembleTwoElementsLogicExpression($key,'=',$val, $concatOperator, 'wheres');
+            }
+        }else {
+            list($value, $operator) = $this->prepareValueAndOperator($value, $operator, func_num_args() == 2);
+            $this->wheres[] = $this->assembleTwoElementsLogicExpression(
+                $column,
+                $operator,
+                $value,
+                $concatOperator,
+                'wheres'
+            );
+        }
 
         return $this;
     }
@@ -1578,9 +1559,9 @@ abstract class BaseBuilder
         }
 
         $id = is_array($key) ? 'tuple('.implode(
-            ', ',
-            array_map([$this->grammar, 'wrap'], $key)
-        ).')' : $this->grammar->wrap($key);
+                ', ',
+                array_map([$this->grammar, 'wrap'], $key)
+            ).')' : $this->grammar->wrap($key);
 
         return $this
             ->addSelect(new Expression("dictGetString('{$dict}', '{$attribute}', {$id}) as `{$as}`"));

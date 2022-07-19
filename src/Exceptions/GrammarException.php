@@ -10,10 +10,6 @@ class GrammarException extends Exception
     {
         $whatMissing = [];
 
-        if (is_null($joinClause->getStrict())) {
-            $whatMissing[] = 'strict';
-        }
-
         if (is_null($joinClause->getType())) {
             $whatMissing[] = 'type';
         }
@@ -22,7 +18,7 @@ class GrammarException extends Exception
             $whatMissing[] = 'table or subquery';
         }
 
-        if (is_null($joinClause->getUsing()) && is_null($joinClause->getOnClauses())) {
+        if (is_null($joinClause->getOnClauses())) {
             $whatMissing[] = 'using or on clauses';
         }
 

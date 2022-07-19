@@ -195,8 +195,8 @@ class Grammar
     {
         return implode(', ', array_map(function ($value) {
             return '('.implode(', ', array_map(function ($value) {
-                return $this->wrap($value);
-            }, $value)).')';
+                    return $this->wrap($value);
+                }, $value)).')';
         }, $values));
     }
 
@@ -241,7 +241,9 @@ class Grammar
     {
         if ($value instanceof Expression) {
             return $value->getValue();
-        } elseif (is_array($value)) {
+        } elseif($value instanceof \Illuminate\Database\Query\Expression){
+            return $value->getValue();
+        }elseif (is_array($value)) {
             return array_map([$this, 'wrap'], $value);
         } elseif (is_string($value)) {
             $value = addslashes($value);

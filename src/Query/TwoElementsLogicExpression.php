@@ -13,21 +13,21 @@ class TwoElementsLogicExpression
      *
      * @var mixed
      */
-    private $firstElement;
+    public $firstElement;
 
     /**
      * Operator.
      *
      * @var Operator
      */
-    private $operator;
+    public $operator;
 
     /**
      * Second element.
      *
      * @var mixed
      */
-    private $secondElement;
+    public $secondElement;
 
     /**
      * Operator which concatenates main statement.
@@ -36,7 +36,7 @@ class TwoElementsLogicExpression
      *
      * @var Operator
      */
-    private $concatenationOperator;
+    public $concatenationOperator;
 
     /**
      * Builder.
