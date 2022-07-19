@@ -53,7 +53,7 @@ class Builder extends BaseBuilder
         } else {
             $return = $this->connection->select($this->toSql(), [], $this->getFiles());
         }
-        return collect($return);
+        return $return ? collect($return) : null;
     }
 
     /**
@@ -82,9 +82,9 @@ class Builder extends BaseBuilder
         $result = $builder->get();
 
         if (!empty($this->groups)) {
-            return $result->count();
+            return $result ? $result->count() : 0;
         } else {
-            return $result->first()['count'] ?? 0;
+            return $result ? $result->first()['count'] : 0;
         }
     }
 
@@ -98,13 +98,14 @@ class Builder extends BaseBuilder
         $builder = $this->getSumQuery($column);
         $result = $builder->get();
 
-        return $result->first()['sum'] ?? 0;
+        return $result ? $result->first()['sum'] : 0;
     }
 
     public function value($column)
     {
         $result = $this->limit(1)->get($column);
-        return $result->first()[$column];
+
+        return $result ? $result->first()[$column] : null;
     }
 
     /**
@@ -136,7 +137,7 @@ class Builder extends BaseBuilder
     {
         $result = $this->limit(1)->get($column);
 
-        return (object)$result->first();
+        return $result ? (object)$result->first() : null;
     }
 
     public function distinct($column = '')

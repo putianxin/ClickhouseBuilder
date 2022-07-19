@@ -10,7 +10,7 @@
 Via composer
 
 ```bash
-composer require Ptx/clickhouse-builder
+composer require ptx/clickhouse-builder
 ```
 
 # Usage
