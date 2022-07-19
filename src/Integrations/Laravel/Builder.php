@@ -262,6 +262,23 @@ class Builder extends BaseBuilder
     }
 
     /**
+     * @return \stdClass
+     * @throws \Tinderbox\Clickhouse\Exceptions\ClientException
+     * 分页
+     */
+    public function apiPages()
+    {
+        $page = request()->input('page', 1);
+        $page_size = request()->input('row', 10);
+        $offset = ($page - 1) * $page_size;
+        $data = new \stdClass();
+        $data->count = $this->count();
+        $data->data = $this->limit($page_size, $offset)->get();
+        $data->page = $page;
+        return $data;
+    }
+
+    /**
      * Get last query statistics from the connection.
      *
      * @return QueryStatistic
