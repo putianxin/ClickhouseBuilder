@@ -126,6 +126,11 @@ class Builder extends BaseBuilder
         return $this;
     }
 
+    public function selectRaw($raw)
+    {
+        return $this->select(raw($raw));
+    }
+
     /**
      * Perform query and get first row.
      *
