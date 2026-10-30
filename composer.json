@@ -4,7 +4,7 @@
   "authors": [
     {
       "name": "ptx",
-      "email": "putianxin@brobonds.com"
+      "email": "a382820748@gmail.com"
     }
   ],
   "autoload": {
@@ -24,7 +24,7 @@
     ]
   },
   "require": {
-    "php": "^7.3|^7.4|^8.0",
+    "php": "^8.2",
     "myclabs/php-enum": "^1.5",
     "the-tinderbox/clickhouse-php-client": "^3.0"
   },

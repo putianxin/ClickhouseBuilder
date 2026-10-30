@@ -242,7 +242,7 @@ class Grammar
         if ($value instanceof Expression) {
             return $value->getValue();
         } elseif($value instanceof \Illuminate\Database\Query\Expression){
-            return $value->getValue();
+            return $value->getValue($this);
         }elseif (is_array($value)) {
             return array_map([$this, 'wrap'], $value);
         } elseif (is_string($value)) {
